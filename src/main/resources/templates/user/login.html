@@ -1,0 +1,40 @@
+<main>
+  <div className="container body-content span=8 offset=2">
+    <div className="well">
+      <form className="form-horizontal" th:action="@{/login}" method="post">
+        <fieldset>
+          <legend>Login</legend>
+          <div className="form-group">
+            <label className="col-sm-4 control-label" htmlFor="user_email">Email</label>
+            <div className="col-sm-4">
+              <input type="email" className="form-control" id="user_email" placeholder="Email"
+                     name="email"/>
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-4 control-label" htmlFor="password">Password</label>
+            <div className="col-sm-4">
+              <input type="password" className="form-control" id="password" placeholder="Password"
+                     name="password"/>
+            </div>
+          </div>
+
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+          <div className="form-group">
+            <div className="col-sm-4 col-sm-offset-4">
+              <a className="btn btn-default" th:href="@{/}">Cancel</a>
+              <button type="submit" className="btn btn-primary">Login</button>
+            </div>
+          </div>
+          <div className="form-group">
+            <div className="col-sm-4 col-sm-offset-4">
+              <a th:href="@{/forgot_password}">Forgot your password?</a>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</main>

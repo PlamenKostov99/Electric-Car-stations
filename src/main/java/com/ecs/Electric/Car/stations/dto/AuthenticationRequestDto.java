@@ -1,15 +1,15 @@
 package com.ecs.Electric.Car.stations.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class UserDto {
+public class AuthenticationRequestDto {
     private String username;
-    private String email;
     private String password;
-    private String confirmPassword;
 }

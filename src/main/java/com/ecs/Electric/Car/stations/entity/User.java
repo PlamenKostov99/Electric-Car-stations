@@ -1,15 +1,16 @@
 package com.ecs.Electric.Car.stations.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
 public class User {
@@ -26,4 +27,14 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles")
+    private Set<Role> roles;
+
+    @Transient
+    public boolean isAdmin() {
+        return this.getRoles().stream().anyMatch(role -> role.getName().equals("ROLE_ADMIN"));
+    }
+
 }

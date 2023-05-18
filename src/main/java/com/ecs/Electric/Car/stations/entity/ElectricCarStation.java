@@ -1,16 +1,16 @@
 package com.ecs.Electric.Car.stations.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import javax.persistence.*;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "electric_stations")
 public class ElectricCarStation {
 
@@ -23,10 +23,10 @@ public class ElectricCarStation {
     private String name;
 
     @Column(name = "latitude")
-    private double latitude;
+    private Double latitude;
 
     @Column(name = "longitude")
-    private double longitude;
+    private Double longitude;
 
     @Column(name = "model")
     private String model;
@@ -42,4 +42,7 @@ public class ElectricCarStation {
 
     @Column(name = "price")
     private Double price;
+
+    @Column(name = "available")
+    private Integer available;
 }

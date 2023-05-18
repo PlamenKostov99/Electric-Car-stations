@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #mapid {
+            height: 60vh;
+            width: 100%;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <h1>Electric Car Stations in Bulgaria</h1>
+    <p>Find your nearest electric car charging station</p>
+</header>
+<main>
+    <div class="container mt-5 bg-light rounded">
+        <div id="mapid"></div>
+        <hr class="my-3 bg-white w-50"/>
+        <h3>
+            <a class="text-primary" th:href="@{/login}">Login</a>
+            if you have an account or
+            <a class="text-primary" th:href="@{/register}">Register</a>
+            now and check our deals.
+        </h3>
+    </div>
+</main>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // Initialize the map and set the view to Bulgaria
+    var map = L.map('mapid').setView([42.733883, 25.48583], 7);
+
+    // Add the base map layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var stations = /*[[${stations}]]*/ [];
+
+    // Add markers to the map
+    stations.forEach(station => {
+        L.marker([station.latitude, station.longitude]).addTo(map)
+            .bindPopup(`<b> Name: ${station.name}</b><br>
+            Model: ${station.model}<br>
+            Capacity: ${station.capacity}<br>
+            Available: ${station.available}<br>
+            Location (City): ${station.locationCity}<br>
+            Location (Address): ${station.locationAddress}<br>
+            Coordinates: ${station.latitude}, ${station.longitude}<br>
+            Price: ${station.price} BGN`);
+    });
+    /*]]>*/
+</script>
+</body>
+</html>
