@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+</head>
+<body>
+<!-- Display the user's bookings -->
+<div class="container">
+    <h1>Your Bookings</h1>
+    <div th:each="booking : ${bookings}">
+        <h2 th:text="${booking.station.name}"></h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${booking.station.name}"></h5>
+                <p class="card-text">
+                    Start Time: <span th:text="${booking.startTime}"></span><br>
+                    End Time: <span th:text="${booking.endTime}"></span><br>
+                    Model: <span th:text="${booking.station.model}"></span><br>
+                    Capacity: <span th:text="${booking.station.capacity}"></span><br>
+                    Location (City): <span th:text="${booking.station.locationCity}"></span><br>
+                    Location (Address): <span th:text="${booking.station.locationAddress}"></span><br>
+                    Latitude: <span th:text="${booking.station.latitude}"></span><br>
+                    Longitude: <span th:text="${booking.station.longitude}"></span><br>
+                    Price: <span th:text="${booking.station.price}"></span> BGN<br>
+                    Charger Type: <span th:text="${booking.station.chargerType}"></span><br>
+                    Availability Status: <span th:text="${booking.station.availabilityStatus}"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

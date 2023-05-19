@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Add a Car</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="jumbotron bg-primary text-white">
+  <div class="container">
+    <h1 class="display-4">Add your car</h1>
+    <p class="lead">Provide the details of your car to start using our services.</p>
+  </div>
+</div>
+
+<div class="container">
+  <form action="#" th:action="@{/car}" th:object="${car}" method="post">
+    <div class="form-group">
+      <label for="make">Make</label>
+      <input type="text" class="form-control" id="make" th:field="*{make}" placeholder="Make">
+    </div>
+    <div class="form-group">
+      <label for="model">Model</label>
+      <input type="text" class="form-control" id="model" th:field="*{model}" placeholder="Model">
+    </div>
+    <div class="form-group">
+      <label for="batteryCapacity">Battery Capacity (kWh)</label>
+      <input type="text" class="form-control" id="batteryCapacity" th:field="*{batteryCapacity}" placeholder="Battery Capacity (kWh)">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <div th:if="${success}" class="alert alert-success" role="alert">
+      <p th:text="${success}"></p>
+    </div>
+  </form>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

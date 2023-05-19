@@ -3,18 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <style>
+        .success-message {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* ... other styles ... */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
         #mapid {
             height: 60vh;
-            width: 100%;
+            width: 75%;
+            float: right;
         }
+
         .header {
             background-color: #f8f9fa;
             padding: 20px;
             text-align: center;
+        }
+
+        .sidebar {
+            width: 25%;
+            float: left;
+            padding: 20px;
+        }
+
+        .info-card {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 25%;
+            max-height: 60vh;
+            overflow-y: scroll;
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .info-card.show {
+            transform: translateX(0);
         }
     </style>
 </head>
@@ -23,22 +67,58 @@
     <h1>Electric Car Stations in Bulgaria</h1>
     <p>Find your nearest electric car charging station</p>
 </header>
+
+<div class="container mt-3">
+    <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+</div>
+
 <main>
-    <div class="container mt-5 bg-light rounded">
-        <div id="mapid"></div>
-        <hr class="my-3 bg-white w-50"/>
-        <h3>
-            <a class="text-primary" th:href="@{/login}">Login</a>
-            if you have an account or
-            <a class="text-primary" th:href="@{/register}">Register</a>
-            now and check our deals.
-        </h3>
+    <div class="sidebar">
+        <form th:action="@{/index}" method="get">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter station name">
+            </div>
+            <div class="form-group">
+                <label for="chargerType">Charger Type</label>
+                <input type="text" class="form-control" id="chargerType" name="chargerType"
+                       placeholder="Enter charger type">
+                <small id="chargerTypeHelp" class="form-text text-muted">Enter one of the following: FAST, SUPER_FAST,
+                    REGULAR.</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
     </div>
+    <div id="mapid"></div>
+    <div class="clearfix"></div>
+    <div id="info-card" class="info-card"></div>
 </main>
+<div id="booking-form" class="booking-form" style="display:none;">
+    <h3>Book a station</h3>
+    <form th:action="@{/bookings/create}" method="post" class="mt-3" onsubmit="formatDateTimeInputs()">
+        <div class="form-group">
+            <label for="startTime">Start Time:</label>
+            <input type="datetime-local" id="startTime" name="startTime" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="endTime">End Time:</label>
+            <input type="datetime-local" id="endTime" name="endTime" class="form-control" required>
+        </div>
+        <input type="hidden" id="userId" name="userId" th:value="${userId}" />
+        <input type="hidden" id="stationId" name="stationId" value="" />
+        <button type="submit" class="btn btn-primary mt-2">Book Now</button>
+    </form>
+</div>
 <script th:inline="javascript">
     /*<![CDATA[*/
+    var userId = [[${userId}]];
+    console.log('userId:', userId);
     // Initialize the map and set the view to Bulgaria
     var map = L.map('mapid').setView([42.733883, 25.48583], 7);
+    var infoCard = document.getElementById('info-card');
+    var bookingForm = document.getElementById('booking-form');
+    var stationIdInput = document.getElementById('stationId');
 
     // Add the base map layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -50,16 +130,55 @@
     // Add markers to the map
     stations.forEach(station => {
         L.marker([station.latitude, station.longitude]).addTo(map)
-            .bindPopup(`<b> Name: ${station.name}</b><br>
-            Model: ${station.model}<br>
-            Capacity: ${station.capacity}<br>
-            Available: ${station.available}<br>
-            Location (City): ${station.locationCity}<br>
-            Location (Address): ${station.locationAddress}<br>
-            Coordinates: ${station.latitude}, ${station.longitude}<br>
-            Price: ${station.price} BGN`);
+            .on('click', function () {
+                // Create a new Book Now button and attach an event listener
+                var bookNowButton = document.createElement('button');
+                bookNowButton.className = 'btn btn-primary mt-2';
+                bookNowButton.innerText = 'Book Now';
+                bookNowButton.addEventListener('click', function() {
+                    showBookingForm(station.id);
+                });
+
+                // Append the Book Now button to the card
+                var cardBody = document.createElement('div');
+                cardBody.className = 'card-body';
+                cardBody.innerHTML = `
+                    <h5 class="card-title">${station.name}</h5>
+                    <p class="card-text">
+                        Model: ${station.model}<br>
+                        Capacity: ${station.capacity}<br>
+                        Location (City): ${station.locationCity}<br>
+                        Location (Address): ${station.locationAddress}<br>
+                        Coordinates: ${station.latitude}, ${station.longitude}<br>
+                        Price: ${station.price} BGN<br>
+                        Charger Type: ${station.chargerType}<br>
+                        Availability Status: ${station.availabilityStatus}
+                    </p>
+                `;
+                cardBody.appendChild(bookNowButton);
+
+                var card = document.createElement('div');
+                card.className = 'card';
+                card.appendChild(cardBody);
+
+                // Clear the infoCard and append the new card
+                infoCard.innerHTML = '';
+                infoCard.appendChild(card);
+                infoCard.classList.add('show');
+            });
+    });
+
+    function showBookingForm(stationId) {
+        stationIdInput.value = stationId;
+        bookingForm.style.display = 'block';
+    }
+
+    map.on('click', function () {
+        infoCard.classList.remove('show');
+        bookingForm.style.display = 'none';
     });
     /*]]>*/
 </script>
+
 </body>
 </html>

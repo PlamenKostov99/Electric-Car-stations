@@ -13,13 +13,15 @@ import java.util.List;
 public class ElectricCarStationController {
     private final ElectricCarStationService electricCarStationService;
 
-    @GetMapping
-    public List<ElectricCarStationDto> getAllStations() {
-        return electricCarStationService.findAll();
+  /*  @GetMapping
+    public List<ElectricCarStationDto> getAllStations(@RequestParam(name = "name") String name,
+                                                      @RequestParam(name = "chargerType") String chargerType,
+                                                      @RequestParam(name = "minAvailableSpots") Integer minAvailableSpots) {
+        return electricCarStationService.findAll(name, chargerType, minAvailableSpots);
     }
 
     @PutMapping("/api/stations/{id}/availability")
     public ElectricCarStationDto updateAvailability(@RequestParam Long id, @RequestParam int available) {
         return electricCarStationService.updateAvailability(id, available);
-    }
+    }*/
 }

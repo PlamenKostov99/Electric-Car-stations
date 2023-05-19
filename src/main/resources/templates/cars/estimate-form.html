@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Estimate Charging Cost</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="jumbotron bg-primary text-white">
+  <div class="container">
+    <h1 class="display-4">Estimate Charging Cost and Time</h1>
+    <p class="lead">Provide your car details and the cost of electricity to get an estimate.</p>
+  </div>
+</div>
+
+<div class="container">
+  <form action="#" th:action="@{/estimate}" method="post">
+    <div class="form-group">
+      <label for="make">Make</label>
+      <input type="text" class="form-control" id="make" name="make" placeholder="Make">
+    </div>
+    <div class="form-group">
+      <label for="model">Model</label>
+      <input type="text" class="form-control" id="model" name="carModel" placeholder="Model">
+    </div>
+    <div class="form-group">
+      <label for="electricityCost">Electricity Cost (per kWh)</label>
+      <input type="text" class="form-control" id="electricityCost" name="electricityCost" placeholder="Electricity Cost (per kWh)">
+    </div>
+    <button type="submit" class="btn btn-primary">Estimate</button>
+  </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -2,6 +2,7 @@ package com.ecs.Electric.Car.stations.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -11,9 +12,10 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 public class ThymeleafConfig {
 
     @Bean
-    public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver) {
+    public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver);
+        templateEngine.addDialect(sec);
         return templateEngine;
     }
 
@@ -25,5 +27,10 @@ public class ThymeleafConfig {
         templateResolver.setSuffix(".html");
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
+    }
+
+    @Bean
+    public SpringSecurityDialect securityDialect() {
+        return new SpringSecurityDialect();
     }
 }

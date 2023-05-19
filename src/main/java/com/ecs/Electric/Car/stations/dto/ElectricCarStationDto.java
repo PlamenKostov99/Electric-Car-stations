@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 @EqualsAndHashCode
 public class ElectricCarStationDto {
+    private Long id;
     private String name;
     private Double latitude;
     private Double longitude;
@@ -17,5 +18,6 @@ public class ElectricCarStationDto {
     private String locationCity;
     private String locationAddress;
     private Double price;
-    private Integer available;
+    private String chargerType;
+    private String availabilityStatus;
 }

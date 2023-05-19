@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Electric Car Stations</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="jumbotron bg-primary text-white">
+  <div class="container">
+    <h1 class="display-4">Welcome to E-CarStations!</h1>
+    <p class="lead">Find the nearest electric car charging station quickly and easily.</p>
+    <hr class="my-4">
+    <p>Explore, reserve, and navigate. Your journey starts here.</p>
+    <a class="btn btn-light btn-lg" href="/index" sec:authorize="isAuthenticated()" role="button">Get Started</a>
+    <a class="btn btn-light btn-lg" href="/login" sec:authorize="!isAuthenticated()" role="button">Get Started</a>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Place your content here -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

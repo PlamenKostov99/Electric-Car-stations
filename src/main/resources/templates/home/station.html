@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <style>
+    #mapid {
+      height: 60vh;
+      width: 100%;
+    }
+
+    .header {
+      background-color: #f8f9fa;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .info-card {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 25%;
+      max-height: 60vh;
+      overflow-y: scroll;
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(0);
+      background: white;
+      padding: 20px;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <h1>Electric Car Station Details</h1>
+</header>
+<main>
+  <div id="mapid"></div>
+  <div id="info-card" class="info-card"></div>
+</main>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  // Initialize the map and set the view to the station's location
+  var map = L.map('mapid').setView(/*[[${station.latitude}]], [[${station.longitude}]]*/, 14);
+
+  // Add the base map layer
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  var station = /*[[${station}]]*/ {};
+
+  // Add a marker for the station
+  L.marker([station.latitude, station.longitude]).addTo(map);
+
+  var infoCard = document.getElementById('info-card');
+  infoCard.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">${station.name}</h5>
+                <p class="card-text">
+                    Model: ${station.model}<br>
+                    Capacity: ${station.capacity}<br>
+                    Available: ${station.available}<br>
+                    Location (City): ${station.locationCity}<br>
+                    Location (Address): ${station.locationAddress}<br>
+                    Coordinates: ${station.latitude}, ${station.longitude}<br>
+                    Price: ${station.price} BGN<br>
+                    Charging Points: ${station.chargingPoints}<br>
+                    Charger Type: ${station.chargerType}<br>
+                    Availability Status: ${station.availabilityStatus}
+                </p>
+            </div>
+        </div>
+    `;
+  /*]]>*/
+</script>
+</body>
+</html>

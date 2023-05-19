@@ -1,0 +1,19 @@
+<div class="container" th:if="${view == '/cars/estimate-results'}">
+  <h2>Your Estimations</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Charger Type</th>
+      <th scope="col">Estimated Cost</th>
+      <th scope="col">Estimated Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="estimation : ${estimation}">
+      <td th:text="${estimation.chargerType}"></td>
+      <td th:text="${estimation.cost}"></td>
+      <td th:text="${estimation.time}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

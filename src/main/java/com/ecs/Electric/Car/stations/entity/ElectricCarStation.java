@@ -1,5 +1,7 @@
 package com.ecs.Electric.Car.stations.entity;
 
+import com.ecs.Electric.Car.stations.enums.AvailabilityStatus;
+import com.ecs.Electric.Car.stations.enums.ChargerType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,6 +45,11 @@ public class ElectricCarStation {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "available")
-    private Integer available;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "charger_type")
+    private ChargerType chargerType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "availability_status")
+    private AvailabilityStatus availabilityStatus;
 }
