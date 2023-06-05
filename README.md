@@ -11,11 +11,22 @@ Flyway: An open-source database migration tool that helps to manage and apply ch
 # Project Structure
 The project consists of a developed prototype of a web application for controlling electric vehicle charging points. The architecture of the developed prototype, a database diagram, and the structured main components of the web system and the developed prototype form the basis of the project.
 
-# Setup and Installation
-(Provide instructions on how to set up and install your project here)
+# Database Migrations
+This project uses Flyway for managing database migrations. Before you can run the application, you'll need to set up your database schema. Here's how to do it:
 
-# Usage
-(Provide instructions on how to use your project here)
+Ensure that you have a PostgreSQL database set up and that the connection details in your application.properties file are correct.
 
-# Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Open a terminal window and navigate to the root directory of the project.
+
+To run the database migrations, use the following command:
+
+```bash
+./gradlew flywayMigrate
+```
+
+This command will apply all the migrations in the src/main/resources/db/migration directory to your database.
+
+Once the command completes, your database should be set up and ready to use with the application.
+Please note that if you make any changes to the database schema, you should create a new Flyway migration to apply those changes. This ensures that your database schema stays in sync with the codebase.
+
+If you encounter any issues while running the migrations, please check the Flyway documentation or open an issue on this GitHub repository.
