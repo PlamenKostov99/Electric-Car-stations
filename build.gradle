@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.6.1'
 	id 'io.spring.dependency-management' version '1.1.0'
+	id "org.flywaydb.flyway" version "9.19.0"
 }
 
 group = 'com.ecs'
@@ -36,6 +37,13 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+flyway {
+	url = 'jdbc:postgresql://localhost:5432/stations'
+	user = 'postgres'
+	password = 'postgres'
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()

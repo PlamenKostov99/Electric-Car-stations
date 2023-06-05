@@ -11,23 +11,17 @@
 <div class="jumbotron bg-primary text-white">
   <div class="container">
     <h1 class="display-4">Estimate Charging Cost and Time</h1>
-    <p class="lead">Provide your car details and the cost of electricity to get an estimate.</p>
+    <p class="lead">Select for which of your cars you need details to get an estimate.</p>
   </div>
 </div>
 
 <div class="container">
   <form action="#" th:action="@{/estimate}" method="post">
     <div class="form-group">
-      <label for="make">Make</label>
-      <input type="text" class="form-control" id="make" name="make" placeholder="Make">
-    </div>
-    <div class="form-group">
-      <label for="model">Model</label>
-      <input type="text" class="form-control" id="model" name="carModel" placeholder="Model">
-    </div>
-    <div class="form-group">
-      <label for="electricityCost">Electricity Cost (per kWh)</label>
-      <input type="text" class="form-control" id="electricityCost" name="electricityCost" placeholder="Electricity Cost (per kWh)">
+      <label for="car">Car</label>
+      <select class="form-control" id="car" name="carId">
+        <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.make} + ' ' + ${car.model}"></option>
+      </select>
     </div>
     <button type="submit" class="btn btn-primary">Estimate</button>
   </form>

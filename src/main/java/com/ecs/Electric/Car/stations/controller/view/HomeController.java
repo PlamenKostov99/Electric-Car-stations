@@ -29,7 +29,7 @@ public class HomeController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        User user = userService.findUserByUsername(username);  // Hypothetical method, replace with your actual method
+        User user = userService.findUserByUsername(username);
         Long userId = user.getId();
         List<ElectricCarStationDto> carStationServiceAll =
             electricCarStationService.findAll(name, chargerType);

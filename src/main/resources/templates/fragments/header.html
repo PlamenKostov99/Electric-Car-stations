@@ -1,3 +1,4 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">E-CarStations</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -7,11 +8,21 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ml-auto">
             <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" th:href="@{'/bookings/user/' + ${userId}}">User Bookings</a>
-            <a class="nav-item nav-link" href="/car">User Car</a>
-            <a class="nav-item nav-link" href="/estimate">Estimate Cost</a>
-            <a class="nav-item nav-link" href="/login">Login</a>
-            <a class="nav-item nav-link" href="/register">Register</a>
+            <a class="nav-item nav-link" th:href="@{'/bookings/user/' + ${userId}}" sec:authorize="isAuthenticated()">User Bookings</a>
+            <a class="nav-item nav-link" href="/car" sec:authorize="isAuthenticated()">User Car</a>
+            <a class="nav-item nav-link" href="/estimate" sec:authorize="isAuthenticated()">Estimate Cost</a>
+            <div sec:authorize="isAuthenticated()">
+                <div class="nav-item nav-link" style="display: flex; align-items: center;">
+                    <p style="margin-bottom: 0;">Welcome, <span sec:authentication="name"></span>!</p>
+                    <a style="margin-left: 10px;" href="/logout">Logout</a>
+                </div>
+
+            </div>
+            <div sec:authorize="isAnonymous()">
+                <a class="nav-item nav-link" href="/login">Login</a>
+                <a class="nav-item nav-link" href="/register">Register</a>
+            </div>
         </div>
     </div>
 </nav>
+</html>

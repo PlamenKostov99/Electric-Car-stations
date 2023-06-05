@@ -10,6 +10,6 @@ import lombok.*;
 @EqualsAndHashCode
 public class EstimationDto {
     private String chargerType;
-    private Double cost;
-    private Double time;
+    private String cost;
+    private String time;
 }

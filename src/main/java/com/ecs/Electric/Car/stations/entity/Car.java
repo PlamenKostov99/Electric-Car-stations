@@ -26,4 +26,7 @@ public class Car {
     private Double averageChargingSpeed;
     @Column(name = "battery_capacity", nullable = false)
     private Double batteryCapacity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 }

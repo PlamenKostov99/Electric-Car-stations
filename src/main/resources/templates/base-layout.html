@@ -1,8 +1,17 @@
-<!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="fragments/head" th:with="pageTitle='Electric Car Stations'">
+    <style>
+        body {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            height: 100vh;
+            margin: 0;
+        }
 
-<head th:include="fragments/head" th:with="pageTitle='Electric Car Stations'"></head>
+        header, footer {
+            width: 100%;
+        }
+    </style>
+</head>
 
 <body>
 
@@ -15,4 +24,3 @@
 <span th:include="fragments/scripts-bundle"></span>
 
 </body>
-</html>

@@ -36,6 +36,18 @@
   </form>
 </div>
 
+<h2>Your Cars:</h2>
+<div class="row">
+  <div class="col-sm-6 col-md-4 col-lg-3" th:each="car : ${cars}">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title" th:text="${car.make} + ' ' + ${car.model}"></h5>
+        <p class="card-text" th:text="${'Battery Capacity: ' + car.batteryCapacity + ' kWh'}"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
