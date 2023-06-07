@@ -6,7 +6,6 @@ import com.ecs.Electric.Car.stations.entity.User;
 import com.ecs.Electric.Car.stations.repository.RoleRepository;
 import com.ecs.Electric.Car.stations.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.ap.internal.util.Collections;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -46,7 +45,7 @@ public class UserService implements UserDetailsService {
         user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
 
         Role userRole = roleRepository.findByName("ROLE_USER");
-        Set<Role> roleSet = Collections.asSet(userRole);
+        Set<Role> roleSet = Collections.singleton(userRole);
         user.setRoles(roleSet);
         userRepository.save(user);
     }

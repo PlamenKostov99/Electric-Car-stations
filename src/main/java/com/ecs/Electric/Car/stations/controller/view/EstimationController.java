@@ -31,6 +31,7 @@ public class EstimationController {
         User user = userService.findUserByUsername(username);
         List<Car> cars = carService.findCarsForUser(user);
         model.addAttribute("cars", cars);
+        model.addAttribute("userId", user.getId());
         model.addAttribute("view", "/cars/estimate-form");
         return "base-layout";
     }
@@ -43,6 +44,7 @@ public class EstimationController {
         Car car = carService.findCarByIdAndUser(carId, user);
         List<EstimationDto> estimation = estimationService.calculateEstimation(car, user);
         model.addAttribute("estimation", estimation);
+        model.addAttribute("userId", user.getId());
         model.addAttribute("view", "/cars/estimate-results");
         return "base-layout";
     }

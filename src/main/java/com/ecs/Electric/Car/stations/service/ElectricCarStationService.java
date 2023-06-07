@@ -30,12 +30,6 @@ public class ElectricCarStationService {
             .collect(Collectors.toList());
     }
 
-    public ElectricCarStationDto updateAvailability(Long id, int available) {
-        ElectricCarStation electricCarStation = electricCarStationRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Station not found with id " + id));
-        ElectricCarStation carStation = electricCarStationRepository.save(electricCarStation);
-        return electricCarStationMapper.electricCarStationEntityToDto(carStation);
-    }
 
     public ElectricCarStationDto findById(Long id) {
         ElectricCarStation electricCarStation = electricCarStationRepository.findById(id)

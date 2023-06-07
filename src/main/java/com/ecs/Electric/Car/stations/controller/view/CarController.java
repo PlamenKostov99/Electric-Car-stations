@@ -6,7 +6,6 @@ import com.ecs.Electric.Car.stations.service.CarService;
 import com.ecs.Electric.Car.stations.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +30,7 @@ public class CarController {
         List<Car> cars = carService.findCarsForUser(user);
         model.addAttribute("car", new Car());
         model.addAttribute("cars", cars);
+        model.addAttribute("userId", user.getId());
         model.addAttribute("view", "/cars/add-car");
         return "base-layout";
     }
@@ -45,11 +45,13 @@ public class CarController {
         User user = userService.findUserByUsername(username);
 
         if (result.hasErrors()) {
+            model.addAttribute("userId", user.getId());
             model.addAttribute("view", "/cars/add-car");
             return "base-layout";
         }
 
         carService.saveCar(car, user);
+        model.addAttribute("userId", user.getId());
         redirectAttributes.addFlashAttribute("success", "Car added successfully!");
         return "redirect:/index";
     }

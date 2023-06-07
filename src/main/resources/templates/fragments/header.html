@@ -7,7 +7,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="/index">Home <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" th:href="@{'/bookings/user/' + ${userId}}" sec:authorize="isAuthenticated()">User Bookings</a>
             <a class="nav-item nav-link" href="/car" sec:authorize="isAuthenticated()">User Car</a>
             <a class="nav-item nav-link" href="/estimate" sec:authorize="isAuthenticated()">Estimate Cost</a>
