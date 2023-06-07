@@ -8,8 +8,6 @@ PostgreSQL: A powerful open-source relational database system used to manage and
 SpringBoot: A framework that simplifies the setup and development of Spring applications. It is used to expedite the development process and create a stand-alone, production-grade application.
 Thymeleaf: A Java-based library used to create web applications. It provides a way to integrate HTML templates with Spring MVC.
 Flyway: An open-source database migration tool that helps to manage and apply changes to the database.
-# Project Structure
-The project consists of a developed prototype of a web application for controlling electric vehicle charging points. The architecture of the developed prototype, a database diagram, and the structured main components of the web system and the developed prototype form the basis of the project.
 
 # Database Migrations
 This project uses Flyway for managing database migrations. Before you can run the application, you'll need to set up your database schema. Here's how to do it:
